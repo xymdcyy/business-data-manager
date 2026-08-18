@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<title>经营数据管理系统</title>
+<link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+<aside class="sidebar">
+  <div class="logo">经营数据管理系统<small>TCL KA 经营分析</small></div>
+  <nav>
+    <button data-tab="entry" class="active"><span class="ic">✏️</span>数据录入</button>
+    <button data-tab="import"><span class="ic">📥</span>数据导入</button>
+    <button data-tab="details"><span class="ic">📋</span>数据明细</button>
+    <button data-tab="report"><span class="ic">📊</span>报表</button>
+  </nav>
+  <div class="sidebar-footer">本地数据库 · SQLite</div>
+</aside>
+
+<main class="main">
+  <header class="topbar">
+    <h2 id="page-title">数据录入</h2>
+    <p id="page-desc">选择产品与月份，直接修改单元格保存数据</p>
+  </header>
+
+  <div class="content">
+    <!-- ==================== 数据录入 ==================== -->
+    <section id="tab-entry" class="tab active">
+      <div class="card">
+        <div class="toolbar">
+          <label>年份 <select id="entry-year"></select></label>
+          <label>月份 <span id="entry-month" class="btn-group month-group"></span></label>
+          <label>产品 <select id="entry-product"></select></label>
+          <label>数据类型 <span id="entry-dtype" class="btn-group"></span></label>
+          <button id="entry-load" class="btn primary">加载数据</button>
+        </div>
+        <div class="status-line" id="entry-status">选择条件后点击「加载数据」</div>
+      </div>
+      <div class="card">
+        <div class="card-title">明细数据（直接修改单元格保存；清空即删除该值）</div>
+        <div id="entry-grid" class="grid-wrap"></div>
+      </div>
+    </section>
+
+    <!-- ==================== 导入 ==================== -->
+    <section id="tab-import" class="tab">
+      <div class="card">
+        <div class="card-title">从原始表格导入</div>
+        <div class="toolbar">
+          <label>来源模板 <select id="import-tpl"></select></label>
+          <label>文件路径 <input id="import-path" type="text" size="60"></label>
+          <button id="import-preview" class="btn primary">试运行预览</button>
+          <button id="import-commit" class="btn" disabled>确认入库</button>
+        </div>
+      </div>
+      <div class="card" id="import-result" style="display:none"></div>
+    </section>
+
+    <!-- ==================== 数据明细 ==================== -->
+    <section id="tab-details" class="tab">
+      <div class="card">
+        <div class="card-title">明细数据（库里全部录入的事实，可按条件筛选后导出）</div>
+        <div class="toolbar">
+          <label>年份 <select id="det-year"></select></label>
+          <label>月份 <select id="det-month-from"></select> ~ <select id="det-month-to"></select></label>
+          <label>产品 <span id="det-product" class="ms-root"></span></label>
+          <label>渠道 <span id="det-channel" class="ms-root"></span></label>
+          <label>数据类型 <span id="det-dtype" class="ms-root"></span></label>
+          <label>字段 <span id="det-field" class="ms-root"></span></label>
+          <label style="gap:4px"><input type="checkbox" id="det-formula"> 包含计算值</label>
+          <button id="det-load" class="btn primary">查询</button>
+          <button id="det-export" class="btn ghost">导出明细</button>
+        </div>
+        <div class="status-line" id="det-status"></div>
+      </div>
+      <div class="card">
+        <div class="card-title">明细列表 <span class="badge ok" id="det-count" style="display:none"></span></div>
+        <div id="det-grid" class="grid-wrap"></div>
+        <div class="pager" id="det-pager" style="margin-top:10px"></div>
+      </div>
+    </section>
+
+    <!-- ==================== 报表 ==================== -->
+    <section id="tab-report" class="tab">
+      <div class="card">
+        <div class="card-title">生成报表</div>
+        <div class="toolbar">
+          <label>报表模板 <select id="report-tpl"></select></label>
+          <label>年份 <select id="report-year"></select></label>
+          <label>月份 <span id="report-month" class="btn-group month-group"></span></label>
+          <button id="report-render" class="btn primary">渲染预览</button>
+          <button id="report-export" class="btn ghost">导出 Excel</button>
+        </div>
+      </div>
+      <div class="card" id="report-result" style="display:none"></div>
+    </section>
+  </div>
+</main>
+
+<!-- 计算过程弹窗 -->
+<div id="explain-modal" class="modal" style="display:none">
+  <div class="modal-box">
+    <div class="modal-head">
+      <span id="explain-title">计算过程</span>
+      <button class="modal-close" onclick="closeExplain()">✕</button>
+    </div>
+    <div class="modal-body" id="explain-body"></div>
+  </div>
+</div>
+
+<!-- 钻取明细弹窗 -->
+<div id="drill-modal" class="modal" style="display:none">
+  <div class="modal-box">
+    <div class="modal-head">
+      <span id="drill-title">钻取明细</span>
+      <button class="modal-close" onclick="closeDrill()">✕</button>
+    </div>
+    <div class="modal-body" id="drill-body"></div>
+  </div>
+</div>
+
+<div id="toast-wrap"></div>
+<script src="/static/app.js"></script>
+</body>
+</html>

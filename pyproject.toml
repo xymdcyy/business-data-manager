@@ -1,0 +1,15 @@
+[project]
+name = "jingying-data-system"
+version = "0.1.0"
+description = "TCL KA 经营数据管理系统：明细数据存储 / 导入 / 报表生成 / Excel 导出"
+requires-python = ">=3.10"
+dependencies = [
+    "fastapi>=0.115.0",
+    "uvicorn>=0.30.0",
+    "openpyxl>=3.1.5",
+]
+
+[[tool.uv.index]]
+name = "tsinghua"
+url = "https://pypi.tuna.tsinghua.edu.cn/simple"
+default = true
