@@ -1,0 +1,27 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.venv/
+venv/
+
+# 敏感业务数据（不上传）
+data/*.db
+data/输出/
+data/*.log
+*.xlsx
+*.xls
+
+# IDE
+.vscode/
+.idea/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+
+# 启动脚本（本地路径相关）
+启动系统.bat
