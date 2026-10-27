@@ -2,6 +2,8 @@
 
 TCL KA 经营数据分析的数据库化管理系统：替代手工维护 Excel 底稿，存叶子、算合计、出报表。
 
+> 环境：Python 3.12（uv 管理，见 `.python-version`；`pyproject.toml` 保留 `>=3.10` 仅作回退通道）。
+
 ## 启动
 
 ```powershell
